@@ -1,5 +1,9 @@
 'use strict';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+
+import PropTypes from 'prop-types';
+
+var createReactClass = require('create-react-class');
 
 import {
   StyleSheet,
@@ -9,20 +13,21 @@ import {
   Easing,
   Text,
   View,
-  Platform
+  Platform,
+  ViewPropTypes
 } from 'react-native';
 
-var textPropTypes = Text.propTypes || View.propTypes
+var textPropTypes = Text.propTypes || ViewPropTypes
 var textInputPropTypes = TextInput.propTypes || textPropTypes
 var propTypes = {
   ...textInputPropTypes,
   inputStyle: textInputPropTypes.style,
   labelStyle: textPropTypes.style,
   disabled: PropTypes.bool,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
 }
 
-var FloatingLabel  = React.createClass({
+var FloatingLabel  = createReactClass({
   propTypes: propTypes,
 
   getInitialState () {
@@ -103,7 +108,6 @@ var FloatingLabel  = React.createClass({
     return (
       <Animated.Text
         ref='label'
-        numberOfLines={this.props.numberOfLines}
         style={[this.state.labelStyle, styles.label, this.props.labelStyle]}
       >
         {this.props.children}
@@ -157,7 +161,6 @@ var FloatingLabel  = React.createClass({
   		<View style={elementStyles}>
         {this._renderLabel()}
         <TextInput
-          ref={(r) => { this.input = r; }}
           {...props}
         >
         </TextInput>
